@@ -3,7 +3,8 @@ import React, { Component } from 'react';
 import SavedList from './Movies/SavedList';
 import MovieList from './Movies/MovieList';
 import Movie from './Movies/Movie';
-import {Route} from 'react-router-dom';
+
+import { Route, Link } from 'react-router-dom';
 
 export default class App extends Component {
   constructor() {
@@ -19,14 +20,20 @@ export default class App extends Component {
     this.setState({ savedList });
   };
 
+  // https://reacttraining.com/react-router/core/api/Route/render-func
+  // Using render={} to pass down props to component
+
   render() {
     return (
-      <React.Fragment>
+      <div>
         <SavedList list={this.state.savedList} />
-        <Route exact path="/" component={MovieList} />
-        <Route path="/movies/:id"
-        render={props => <Movie {...props} addToSavedList={this.addToSavedList} />} />
-      </React.Fragment>
+        <div>
+          <Route exact path="/" component={MovieList} />
+          <Route path="/movies/:id" render={props => (
+            <Movie {...props} addToSavedList={this.addToSavedList} />
+          )} />
+        </div>
+      </div>
     );
   }
 }
